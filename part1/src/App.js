@@ -7,14 +7,11 @@ const App = () => {
   const part3 = 'State of a component'
   const exercises3 = 14
 
-  const Header = (props) => {
-      return <h1>{props.course}</h1>
-  }
-  const Content = (props) => {
-      return <p>{props.part + props.exercises}</p>
-  }
-  const Total = (props) => {
-    var total = props.exercises1+props.exercises2+props.exercises3
+  const Header = ({course}) => <h1>{course}</h1>
+  const Content = ({part,exercises}) => <p>{part + exercises}</p>
+
+  const Total = ({exercises1,exercises2,exercises3}) => {
+    var total = exercises1+exercises2+exercises3
     return <p>Number of exercises {total}</p>
   }
 

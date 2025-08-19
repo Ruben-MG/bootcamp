@@ -1,50 +1,54 @@
+import { useState } from 'react'
+
 const App = () => {
-  //Variables
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      }
-    ]
-  }
-  //Funciones
-  const Header = ({course}) => <h1>{course}</h1>
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
 
-  const Part = ({part, exercises}) => <p>{part}{exercises}</p>
+  const IncrementGood = () =>setGood(good +1)
+  const IncrementNeutral = () =>setNeutral(neutral +1)
+  const IncrementBad = () =>setBad(bad +1)
 
-  const Content = () => {
-      return (
-            <div>
-                <Part part={course.parts[0].name} exercises= {course.parts[0].exercises}/> 
-                <Part part={course.parts[1].name} exercises= {course.parts[1].exercises}/> 
-                <Part part={course.parts[2].name} exercises= {course.parts[2].exercises}/>
-            </div>
+  const ButtonCounter = () => {
+    return(
+      <div>
+        <button onClick={IncrementGood}>good</button>
+        <button onClick={IncrementNeutral}>neutral</button>
+        <button onClick={IncrementBad}>bad</button>
+      </div>
     )
   }
 
-  const Total = ({exercises1,exercises2,exercises3}) => {
-    var total = exercises1+exercises2+exercises3
-    return <p>Number of exercises {total}</p>
+  const PrintCounter = () => {
+      return (
+      <div>
+        <p>good {good}</p>
+        <p>neutral {neutral}</p>
+        <p>bad {bad}</p>
+      </div>)
   }
 
+  const PrintAllCounter = () => {
+
+    var total = good+neutral+bad
+    var average = ((good-bad)/total)*100
+    var positive = (good/total)*100
+    return ( 
+      <div>
+        <p>All: {total}</p>
+        <p>Average: {average.toFixed(2)}%</p>
+        <p>Positive: {positive.toFixed(2)}%</p>
+      </div>
+    )
+  }
 
   return (
     <div>
-      <Header course={course.name}/>
-      <Content  part1={course.parts[0].name} exercises1={course.parts[0].exercises}
-                part2={course.parts[1].name} exercises2={course.parts[1].exercises}
-                part3={course.parts[2].name} exercises3={course.parts[2].exercises} />
-      <Total exercises1={course.parts[0].exercises} exercises2={course.parts[1].exercises} exercises3={course.parts[2].exercises}/>
+      <h1>Give feedback</h1>
+      <ButtonCounter/>
+      <h1>Statistics</h1>
+      <PrintCounter/>
+      <PrintAllCounter/>
     </div>
   )
 }

@@ -1,56 +1,85 @@
-import { useState } from 'react'
+import { useState } from "react";
+
+const StatisticLine = ({ value, text }) => (
+  <p>
+    {value} {text}
+  </p>
+);
+
+const ButtonCounter = ({ onClick, text }) => (
+  <button onClick={onClick}>{text}</button>
+);
+
+const AllCounters = ({ good, neutral, bad }) => {
+  var total = good + neutral + bad;
+  var average = (((good - bad) / total) * 100).toFixed(2);
+  var positive = ((good / total) * 100).toFixed(2);
+  return total === 0 ? (
+    <p>We don't have any statistics yet</p>
+  ) : (
+    <div>
+      <table>
+        <tbody>
+          <tr>
+            <td>Good</td>
+            <td>{good}</td>
+          </tr>
+          <tr>
+            <td>Neutral</td>
+            <td>{neutral}</td>
+          </tr>
+          <tr>
+            <td>Bad</td>
+            <td>{bad}</td>
+          </tr>
+          <tr>
+            <td>All: </td>
+            <td>{total}</td>
+          </tr>
+          <tr>
+            <td>Average: </td>
+            <td>{average} %</td>
+          </tr>
+          <tr>
+            <td>Positive</td>
+            <td>{positive} %</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  );
+};
+
+const Print = () => {
+  return (
+    <div>
+      <table>
+        <tr>
+          <td></td>
+        </tr>
+      </table>
+    </div>
+  );
+};
 
 const App = () => {
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-
-  const IncrementGood = () =>setGood(good +1)
-  const IncrementNeutral = () =>setNeutral(neutral +1)
-  const IncrementBad = () =>setBad(bad +1)
-
-  const ButtonCounter = () => {
-    return(
-      <div>
-        <button onClick={IncrementGood}>good</button>
-        <button onClick={IncrementNeutral}>neutral</button>
-        <button onClick={IncrementBad}>bad</button>
-      </div>
-    )
-  }
-
-  const PrintCounter = () => {
-      return (
-      <div>
-        <p>good {good}</p>
-        <p>neutral {neutral}</p>
-        <p>bad {bad}</p>
-      </div>)
-  }
-
-  const PrintAllCounter = () => {
-
-    var total = good+neutral+bad
-    var average = ((good-bad)/total)*100
-    var positive = (good/total)*100
-    return ( 
-      <div>
-        <p>All: {total}</p>
-        <p>Average: {average.toFixed(2)}%</p>
-        <p>Positive: {positive.toFixed(2)}%</p>
-      </div>
-    )
-  }
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
 
   return (
     <div>
       <h1>Give feedback</h1>
-      <ButtonCounter/>
+      <ButtonCounter text="good" onClick={() => setGood(good + 1)} />
+      <ButtonCounter text="neutral" onClick={() => setNeutral(neutral + 1)} />
+      <ButtonCounter text="bad" onClick={() => setBad(bad + 1)} />
       <h1>Statistics</h1>
-      <PrintCounter/>
-      <PrintAllCounter/>
+      <StatisticLine text="good" value={good} />
+      <StatisticLine text="neutral" value={neutral} />
+      <StatisticLine text="bad" value={bad} />
+      <AllCounters good={good} neutral={neutral} bad={bad} />
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
